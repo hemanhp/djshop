@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/src
+      - ./data/web:/vol/web
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15.4
+    ports:
+      - "5432:5432"
+    volumes:
+      - djshop-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=djshop
+      - POSTGRES_USER=djshop
+      - POSTGRES_PASSWORD=123@456
+
+volumes:
+  djshop-data:
