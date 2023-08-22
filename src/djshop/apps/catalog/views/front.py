@@ -5,5 +5,5 @@ from djshop.apps.catalog.serializers.front import CategorySerializer
 
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.public()
     serializer_class = CategorySerializer
