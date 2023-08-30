@@ -49,15 +49,16 @@ class ProductClass(models.Model):
     require_shipping = models.BooleanField(default=True)
 
 
-    options =  models.ManyToManyField('Option')
+    options =  models.ManyToManyField('Option', blank=True)
+    @property
     def has_attribute(self):
         return self.attributes.exists()
 
     def __str__(self):
         return self.title
     class Meta:
-        verbose_name = "Option Group Value"
-        verbose_name_plural = "Option Group Values"
+        verbose_name = "Product Class"
+        verbose_name_plural = "Product Classes"
 
 
 class ProductAttribute(models.Model):
