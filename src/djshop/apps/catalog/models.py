@@ -2,6 +2,7 @@ from django.db import models
 from treebeard.mp_tree import MP_Node
 
 from djshop.apps.catalog.managers import CategoryQuerySet
+from djshop.libs.db.fields import UpperCaseCharField
 
 
 # Create your models here.
@@ -103,3 +104,23 @@ class Option(models.Model):
     class Meta:
         verbose_name = "Option"
         verbose_name_plural = "Option"
+
+
+class Product(models.Model):
+    class ProductTypeChoice(models.TextChoices):
+        standalone = 'standalone'
+        parent = 'parent'
+        child = 'child'
+
+    structure = models.CharField(max_length=16, choices=ProductTypeChoice.choices, default=ProductTypeChoice.standalone)
+    parent = models.ForeignKey("self", related_name="children", on_delete=models.CASCADE, null=True, blank=True)
+    title = models.CharField(max_length=128, null=True, blank=True)
+    upc = UpperCaseCharField(max_length=24, unique=True, null=True, blank=True)
+    is_public = models.BooleanField(default=True)
+    meta_title = models.CharField(max_length=128, null=True, blank=True)
+    meta_description = models.TextField(null=True, blank=True)
+
+    slug = models.SlugField(unique=True, allow_unicode=True)
+    class Meta:
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
