@@ -131,6 +131,7 @@ class Product(models.Model):
     attributes = models.ManyToManyField(ProductAttribute, through='ProductAttributeValue')
     recommended_products = models.ManyToManyField('catalog.Product',through='ProductRecommendation', blank=True)
 
+
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products"
