@@ -3,6 +3,7 @@ from treebeard.mp_tree import MP_Node
 
 from djshop.apps.catalog.managers import CategoryQuerySet
 from djshop.libs.db.fields import UpperCaseCharField
+from djshop.libs.db.models import AuditableModel
 
 
 # Create your models here.
@@ -110,7 +111,7 @@ class Option(models.Model):
         verbose_name_plural = "Option"
 
 
-class Product(models.Model):
+class Product(AuditableModel):
     class ProductTypeChoice(models.TextChoices):
         standalone = 'standalone'
         parent = 'parent'
@@ -141,6 +142,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products"
+
 
 
 class ProductAttributeValue(models.Model):
@@ -185,3 +187,4 @@ class ProductImage(models.Model):
         for index, image in enumerate(self.product.images.all()):
             image.display_order = index
             image.save()
+
