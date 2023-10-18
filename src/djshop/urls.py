@@ -19,12 +19,18 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 from django.conf import settings
+from rest_framework.authtoken.views import obtain_auth_token
 
 admin_urls = [
+    path('api/admin/users/',
+         include(('djshop.auths.users.urls.admin', 'djshop.auths.users'), namespace='users-admin')),
+
     path('api/admin/catalog/', include(('djshop.apps.catalog.urls.admin', 'djshop.apps.catalog'), namespace='catalog-admin'))
 ]
 
 front_urls =[
+    path('api/front/users/',
+         include(('djshop.auths.users.urls.front', 'djshop.auths.users'), namespace='users-front')),
     path('api/front/catalog/', include(('djshop.apps.catalog.urls.front', 'djshop.apps.catalog'), namespace='catalog-front'))
 ]
 
